@@ -13,7 +13,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Iterator;
 import java.util.List;
 
-private class TodoData {
+public class TodoData {
     private static TodoData instance = new TodoData();
     private static String filename = "TodoListItems.txt";
 
@@ -32,9 +32,9 @@ private class TodoData {
         return todoItems;
     }
 
-    public void setTodoIttems(List<TodoItem> todoIttems) {
-        this.todoItems = todoIttems;
-    }
+//    public void setTodoIttems(List<TodoItem> todoIttems) {
+//        this.todoItems = todoIttems;
+//    }
 
     public void loadTodoItems() throws IOException {
         todoItems = FXCollections.observableArrayList();
@@ -71,7 +71,7 @@ private class TodoData {
             Iterator<TodoItem> iter = todoItems.iterator();
             while(iter.hasNext()) {
                 TodoItem item = iter.next();
-                bw.write(String.format("%s\t%S\t%s",
+                bw.write(String.format("%s\t%s\t%s",
                         item.getShortDescription(),
                         item.getDetails(),
                         item.getDeadLine().format(formatter)));
