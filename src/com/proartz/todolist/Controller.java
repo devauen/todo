@@ -4,6 +4,8 @@ import com.proartz.todolist.datamodel.TodoData;
 import com.proartz.todolist.datamodel.TodoItem;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
@@ -33,7 +35,22 @@ public class Controller {
     @FXML
     private BorderPane mainBorderPane;
 
+    @FXML
+    private ContextMenu listContextMenu;
+
     public void initialize() {
+
+        listContextMenu = new ContextMenu();
+        MenuItem deleteMenuItem = new MenuItem("Delete");
+        deleteMenuItem.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                TodoItem item = todoListView.getSelectionModel().getSelectedItem();
+                deleteItem(item);
+            }
+        });
+
+        listContextMenu.getItems().addAll(deleteMenuItem);
         todoListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<TodoItem>() {
             @Override
             public void changed(ObservableValue<? extends TodoItem> observable, TodoItem oldValue, TodoItem newValue) {
@@ -105,5 +122,9 @@ public class Controller {
         TodoItem item = todoListView.getSelectionModel().getSelectedItem();
         itemDetailsTextArea.setText(item.getDetails());
         deadlineLabel.setText(item.getDeadLine().toString());
+    }
+
+    public void deleteItem(TodoItem item) {
+
     }
 }
